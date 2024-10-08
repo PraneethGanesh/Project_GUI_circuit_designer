@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circuit Design Web</title>
+</head>
+<body>
+    <h1>Welcome to the Circuit Design Interface</h1>
+    
+    <button id="open-gui-btn">Open Circuit GUI</button>
+
+    <script>
+        document.getElementById('open-gui-btn').addEventListener('click', function() {
+            fetch("/open_gui", {
+                method: "POST"
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "success") {
+                    alert(data.message);
+                } else {
+                    alert("Error: " + data.message);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
