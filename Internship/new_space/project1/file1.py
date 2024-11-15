@@ -204,44 +204,44 @@ class CircuitDesignGUI:
         style = ttk.Style()
         style.configure("TButton", font=("Helvetica", 12))
 
-        # Define the categories
-        categories = [
-            ("Breadboards", ["Option 1", "Option 2"]),
-            ("Basic", ["Option 1", "Option 2", "Option 3"]),
-            ("Input", ["Option 3", "Option 4"]),
-            ("Output", ["Option 5", "Option 6"]),
-            ("Microcontroller", ["Option 7"]),
-            ("Internet of Things", ["Option 8"]),
-            ("Power", ["Option 9"]),
-            ("Integrated Circuit", ["Option 10"]),
-            ("Adafruit", ["Option 11"])
-        ]
+    #     # Define the categories
+    #     categories = [
+    #         ("Breadboards", ["Option 1", "Option 2"]),
+    #         ("Basic", ["Option 1", "Option 2", "Option 3"]),
+    #         ("Input", ["Option 3", "Option 4"]),
+    #         ("Output", ["Option 5", "Option 6"]),
+    #         ("Microcontroller", ["Option 7"]),
+    #         ("Internet of Things", ["Option 8"]),
+    #         ("Power", ["Option 9"]),
+    #         ("Integrated Circuit", ["Option 10"]),
+    #         ("Adafruit", ["Option 11"])
+    #     ]
 
-        # Create collapsible sections for each category
-        for category_name, options in categories:
-            # Create a button for the category (collapsible section)
-            category_button = ttk.Button(self.menu_frame, text=category_name, command=lambda c=category_name: self.toggle_category(c))
-            category_button.pack(fill=tk.X, padx=10, pady=(5, 0))
+    #     # Create collapsible sections for each category
+    #     for category_name, options in categories:
+    #         # Create a button for the category (collapsible section)
+    #         category_button = ttk.Button(self.menu_frame, text=category_name, command=lambda c=category_name: self.toggle_category(c))
+    #         category_button.pack(fill=tk.X, padx=10, pady=(5, 0))
 
-            # Create a frame to hold the options within the category
-            option_frame = tk.Frame(self.menu_frame)
-            option_frame.pack(fill=tk.X, padx=10)
-            option_frame.pack_forget()  # Initially hide the options
+    #         # Create a frame to hold the options within the category
+    #         option_frame = tk.Frame(self.menu_frame)
+    #         option_frame.pack(fill=tk.X, padx=10)
+    #         option_frame.pack_forget()  # Initially hide the options
 
-            # Add buttons for each option within the category
-            for option in options:
-                tk.Button(option_frame, text=option, command=lambda o=option: self.option_selected(o)).pack(fill=tk.X, padx=20, pady=2)
+    #         # Add buttons for each option within the category
+    #         for option in options:
+    #             tk.Button(option_frame, text=option, command=lambda o=option: self.option_selected(o)).pack(fill=tk.X, padx=20, pady=2)
 
-            # Store references to the option frames for toggling visibility
-            setattr(self, f"{category_name}_frame", option_frame)
+    #         # Store references to the option frames for toggling visibility
+    #         setattr(self, f"{category_name}_frame", option_frame)
 
-    def toggle_category(self, category_name):
-        # Toggle the visibility of the category's options
-        frame = getattr(self, f"{category_name}_frame")
-        if frame.winfo_viewable():
-            frame.pack_forget()
-        else:
-            frame.pack(fill=tk.X)
+    # def toggle_category(self, category_name):
+    #     # Toggle the visibility of the category's options
+    #     frame = getattr(self, f"{category_name}_frame")
+    #     if frame.winfo_viewable():
+    #         frame.pack_forget()
+    #     else:
+    #         frame.pack(fill=tk.X)
 
     def option_selected(self, option_name):
         # Placeholder function for when an option is selected
@@ -288,22 +288,20 @@ class CircuitDesignGUI:
         elif self.pin_type=="Vcc":
             self.vcc_pin
         else:
-            self.canvas.bind("<Button-1>", self.start_connection)
-            self.canvas.bind("<B1-Motion>", self.update_connection)
-            self.canvas.bind("<ButtonRelease-1>", self.end_connection)
+            self.pin_connection
+    def pin_connection(self,event):
+        self.canvas.bind("<Button-1>", self.start_connection)
+        self.canvas.bind("<B1-Motion>", self.update_connection)
+        self.canvas.bind("<ButtonRelease-1>", self.end_connection)
     def ground_pin(self,event):
             self.canvas.bind("<Button-1>", self.start_connection)
             self.canvas.bind("<B1-Motion>", self.update_connection)
             self.canvas.bind("<ButtonRelease-1>", self.end_connection)
         
     def vcc_pin(self,event):
-        if self.pin_type=="Vcc":
             self.canvas.bind("<Button-1>", self.start_connection)
             self.canvas.bind("<B1-Motion>", self.update_connection)
             self.canvas.bind("<ButtonRelease-1>", self.end_connection)
-        else:
-            messagebox.showerror("wrong choice")
-            return
     def start_connection(self, event):
         """Start connection by identifying the pin and image."""
         self.start_coords = (event.x, event.y)
