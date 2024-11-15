@@ -284,24 +284,18 @@ class CircuitDesignGUI:
             return 
         self.pin_type = pin_type
         if self.pin_type=="GND":
-            self.ground_pin
+            self.canvas.bind("<Button-1>", self.start_connection)
+            self.canvas.bind("<B1-Motion>", self.update_connection)
+            self.canvas.bind("<ButtonRelease-1>", self.end_connection)
         elif self.pin_type=="Vcc":
-            self.vcc_pin
+            self.canvas.bind("<Button-1>", self.start_connection)
+            self.canvas.bind("<B1-Motion>", self.update_connection)
+            self.canvas.bind("<ButtonRelease-1>", self.end_connection)
         else:
-            self.pin_connection
-    def pin_connection(self,event):
-        self.canvas.bind("<Button-1>", self.start_connection)
-        self.canvas.bind("<B1-Motion>", self.update_connection)
-        self.canvas.bind("<ButtonRelease-1>", self.end_connection)
-    def ground_pin(self,event):
             self.canvas.bind("<Button-1>", self.start_connection)
             self.canvas.bind("<B1-Motion>", self.update_connection)
             self.canvas.bind("<ButtonRelease-1>", self.end_connection)
-        
-    def vcc_pin(self,event):
-            self.canvas.bind("<Button-1>", self.start_connection)
-            self.canvas.bind("<B1-Motion>", self.update_connection)
-            self.canvas.bind("<ButtonRelease-1>", self.end_connection)
+    
     def start_connection(self, event):
         """Start connection by identifying the pin and image."""
         self.start_coords = (event.x, event.y)
